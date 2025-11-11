@@ -5,8 +5,8 @@ import { ReservationController } from "../controllers/ReservationController";
 const router = Router();
 const controller = new ReservationController();
 
-router.get("/", controller.);
-router.post("/", controller.);
-router.delete("/:id", );
+router.get("/", controller.list);
+router.post("/", controller.create);
+router.delete("/:id", controller.delete);
 
 export { router as reservationRouter };

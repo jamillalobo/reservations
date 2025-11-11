@@ -6,14 +6,30 @@ const reservationRepo = new ReservationRepository();
 const roomRepo = new RoomRepository();
 
 export class ReservationService {
-  async list(filters: any, page = 1, limit = 20) {
-    
-    return { data, meta: { page, limit, total } };
+  async list() {
+    const reservations = await reservationRepo.list();
+    return reservations;
   }
 
   async create(payload: any) {
-    // students: implement business rules here
+    console.log(payload)
+    const room = await roomRepo.findById(payload.roomId);
+    if (!room) {
+      throw new Error("Room not found");
+    }
+
+    const created = await reservationRepo.create(payload);
     return created;
+  }
+
+  async delete(id: number) {
+    const reservation = await reservationRepo.findById(id);
+    if (!reservation) {
+      throw new Error("Reservation not found");
+    }
+
+    await reservationRepo.delete(id);
+    return;
   }
 
   async cancel(id: number) {
