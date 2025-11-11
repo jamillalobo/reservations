@@ -2,11 +2,11 @@
 import { prisma } from "../prisma";
 
 export class RoomRepository {
-  async list(where: any = {}) {
-    return prisma.room.
+  async list() {
+    return prisma.room.findMany();
   }
-
+ 
   async findById(id: number) {
-    return prisma.room.
+    return prisma.room.findUnique({ where: { id } });
   }
 }
