@@ -17,6 +17,16 @@ export class ReservationRepository {
   //   return prisma.reservation.findUnique();
   // }
 
+  async findByRoomIdAndTimeInterval(roomId: number, startAt: Date, endAt: Date) {
+    return prisma.reservation.findMany({
+      where: {
+        roomId,
+        startAt: { lte: endAt },
+        endAt: { gte: startAt },
+      },
+    });
+  }
+
   async create(data: any) {
     return prisma.reservation.create(data);
   }
