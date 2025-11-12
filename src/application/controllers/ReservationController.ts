@@ -26,7 +26,7 @@ export class ReservationController {
     }
   }
 
-    async update(req: Request, res: Response) {
+   async update(req: Request, res: Response) {
     try {
       const { id } = req.params;
       const { title, userName, userEmail, roomId, startAt, endAt } = req.query;
@@ -40,10 +40,8 @@ export class ReservationController {
     } catch (error) {
       console.error("Erro ao atualizar reserva:", error);
       return res.status(500).json({ message: "Erro ao atualizar reserva",  error: error instanceof Error ? error.message : String(error)});
-    }
-  }
 
-  async delete(req: Request, res: Response) {
+   async delete(req: Request, res: Response) {
     try {
       const { id } = req.params;
       await service.delete(Number(id));

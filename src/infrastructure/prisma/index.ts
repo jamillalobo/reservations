@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
 }
 
-;(prisma as any).$on("query", (e: any) => {
+prisma.$on("query", (e) => {
   if (process.env.NODE_ENV === "development") {
     console.log(`[prisma] ${e.query} :: ${e.params}`);
   }

@@ -78,8 +78,4 @@ export class ReservationService {
     return;
   }
 
-  async cancel(id: number) {
-    await reservationRepo.update(id, { status: "CANCELLED" });
-    return;
-  }
 }
