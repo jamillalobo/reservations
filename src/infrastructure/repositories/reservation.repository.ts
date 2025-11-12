@@ -2,20 +2,25 @@
 import { prisma } from "../prisma";
 
 export class ReservationRepository {
+  async list(skip = 0, take = 20) {
+    const data = await prisma.reservation.findMany({
+      include: { room: true }, 
+      skip,
+      take,
+      orderBy: { startAt: "asc" }, 
+    });
 
-  // async list() {
-  //   const data = await prisma.reservation.findMany({
-  //     include: { room: true },
-  //     skip,
-  //     take,
-  //     : { startAt: "asc" },
-  //   });
-  //   const total = await prisma.reservation.count({  });
-  // }
+    const total = await prisma.reservation.count();
 
-  // async findById(id: number) {
-  //   return prisma.reservation.findUnique();
-  // }
+    return { data, total };
+  }
+
+  async findById(id: number) {
+    return prisma.reservation.findUnique({
+      where: { id },
+      include: { room: true },
+    });
+  }
 
   async findByRoomIdAndTimeInterval(roomId: number, startAt: Date, endAt: Date) {
     return prisma.reservation.findMany({
@@ -28,10 +33,21 @@ export class ReservationRepository {
   }
 
   async create(data: any) {
-    return prisma.reservation.create(data);
+    return prisma.reservation.create({
+      data,
+    });
   }
 
-  // async update(id: number, data: any) {
-  //   return prisma.reservation.update();
-  // }
+  async update(id: number, data: any) {
+    return prisma.reservation.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async delete(id: number) {
+    return prisma.reservation.delete({
+      where: { id },
+    });
+  }
 }
