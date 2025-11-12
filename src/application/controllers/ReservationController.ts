@@ -19,8 +19,9 @@ export class ReservationController {
 
   async create(req: Request, res: Response) {
     try {
-      const reservation = await service.create({ payload: req.body });
-      return res.status(201).json(reservation)
+      const { title, userName, userEmail, roomId } = req.body;
+      const reservation = await service.create({ title, userName, userEmail, roomId });
+      return res.status(201).json(reservation);
     } catch (error) {
       console.error("Erro ao criar reserva:", error);
       return res.status(500).json({ message: "Erro ao criar reserva" });

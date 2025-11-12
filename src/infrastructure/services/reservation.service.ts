@@ -11,14 +11,30 @@ export class ReservationService {
     return reservations;
   }
 
-  async create(payload: any) {
-    console.log(payload)
-    const room = await roomRepo.findById(payload.roomId);
-    if (!room) {
-      throw new Error("Room not found");
-    }
+  async create(payload: {
+    title: string;
+    userName: string;
+    userEmail: string;
+    roomId: number;
+  }) {
+    console.log("AAAA", payload.title)
 
-    const created = await reservationRepo.create(payload);
+    const now = new Date()
+    const code = `RSV-${now}`
+
+
+    const newPayload = {
+      code, 
+      title: payload.title,
+      userName: payload.userName, 
+      userEmail: payload.userEmail, 
+      roomId: payload.roomId, 
+      startAt: new Date(),
+      endAt: new Date()
+    }
+    console.log("payload",newPayload)
+
+    const created = await reservationRepo.create(newPayload);
     return created;
   }
 
